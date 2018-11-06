@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct Question {
+  var q : String
+  var a : Int
+  var ans : [String]
+}
+
 struct Subject {
   var title : String
   var desc : String
@@ -27,6 +33,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     Subject(title: "Music", desc: "Some music balabala", image: "two"),
     Subject(title: "Game", desc: "How do u know about games", image: "three")
   ]
+  
+  let mathQuestions = [
+    Question(q: "1+1=?", a: 1, ans: ["1", "2", "3", "4"]),
+    Question(q: "Which one is NOT a prime number", a: 0, ans: ["87", "13", "67", "23"])
+  ]
+  
+  let musicQuestion = [
+    Question(q: "Which is a string instrument", a: 2, ans: ["Drum",  "Saxophone", "Balalaika", "Flute"]),
+    Question(q: "Guitar was invented in", a: 0, ans: ["Spain", "America", "India", "Korea"])
+  ]
+  
+  let gameQuestion = [
+    Question(q: "What is the most sold game \n on Steam in 2018", a: 1, ans: ["GTA", "PUBG", "Assasin's Creed: Odyssey", "CS: GO"]),
+    Question(q: "Which team got League of Legend \n 2018 Word Championship", a: 3, ans: ["RNG", "KT", "Fnatic", "IG"])
+  ]
+  
+  var currentQuestion: [Question] = []
+  
+  var category: Int = 0
   
   @IBOutlet weak var tableView: UITableView!
   
@@ -53,6 +78,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     return 100
   }
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    switch indexPath.row {
+    case 0:
+      currentQuestion = mathQuestions
+    case 1:
+      currentQuestion = musicQuestion
+    default:
+      currentQuestion = gameQuestion
+    }
+    performSegue(withIdentifier: "categoryToQuestion", sender: self)
+  }
+  
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -60,6 +97,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     tableView.dataSource = self
     tableView.delegate = self
     tableView.tableFooterView = UIView()
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "categoryToQuestion" {
+      let questionVC = segue.destination as! QuestionViewController
+      questionVC.questions = currentQuestion
+      questionVC.numTotal = currentQuestion.count
+    }
   }
 
 }
