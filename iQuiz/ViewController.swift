@@ -48,6 +48,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   let file = "data.txt"
   var urlString = "http://tednewardsandbox.site44.com/questions.json"
   var currentQuestion: [Question] = []
+  var timer = Timer()
   
   @IBOutlet weak var tableView: UITableView!
   
@@ -87,6 +88,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    // add pull to refresh
     let refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(refreshPage), for: .valueChanged)
     self.tableView.refreshControl = refreshControl
@@ -152,6 +155,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print("Error loading local data!")
       }
     }
+    
+    // refresh data every 30s
+    self.timer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(ViewController.timeRefresh), userInfo: nil, repeats: true)
+  }
+  
+  @objc func timeRefresh() {
+    loadUrl()
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
