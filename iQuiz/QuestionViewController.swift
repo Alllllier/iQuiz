@@ -11,9 +11,10 @@ import UIKit
 class QuestionViewController: UIViewController {
   var questions: [Question] = []
   var currentQuestion : Question?
-  var currentAnswer: Int = 0
+  var currentAnswer: String = ""
   var numCorrect = 0;
   var numTotal = 0;
+  var urlString = ""
   
   @IBOutlet weak var questionLabel: UILabel!
   
@@ -26,15 +27,15 @@ class QuestionViewController: UIViewController {
     super.viewDidLoad()
         
     currentQuestion = questions.removeLast();
-    questionLabel.text = currentQuestion?.q
-    bt1.setTitle(currentQuestion?.ans[0], for: .normal)
-    bt2.setTitle(currentQuestion?.ans[1], for: .normal)
-    bt3.setTitle(currentQuestion?.ans[2], for: .normal)
-    bt4.setTitle(currentQuestion?.ans[3], for: .normal)
+    questionLabel.text = currentQuestion?.text
+    bt1.setTitle(currentQuestion?.answers[0], for: .normal)
+    bt2.setTitle(currentQuestion?.answers[1], for: .normal)
+    bt3.setTitle(currentQuestion?.answers[2], for: .normal)
+    bt4.setTitle(currentQuestion?.answers[3], for: .normal)
   }
   
   @IBAction func answerClicked(_ sender: UIButton) {
-    currentAnswer = sender.tag
+    currentAnswer = String(sender.tag + 1)
     
     bt1.setTitleColor(UIColor.blue, for: .normal)
     bt2.setTitleColor(UIColor.blue, for: .normal)
@@ -47,12 +48,13 @@ class QuestionViewController: UIViewController {
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "questionToAnswer" {
       let answerVC = segue.destination as! AnswerViewController
-      answerVC.question = (currentQuestion?.q)!
-      answerVC.answer = (currentQuestion?.ans[(currentQuestion?.a)!])!
-      answerVC.isCorrect = currentAnswer == currentQuestion?.a
+      answerVC.question = (currentQuestion?.text)!
+      answerVC.answer = (currentQuestion?.answers[Int((currentQuestion?.answer)!)! - 1])!
+      answerVC.isCorrect = currentAnswer == currentQuestion?.answer
       answerVC.questionsLeft = questions
       answerVC.numCorrect = numCorrect
       answerVC.numTotal = numTotal
+      answerVC.urlString = urlString
     }
   }
 }

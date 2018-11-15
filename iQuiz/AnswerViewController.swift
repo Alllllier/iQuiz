@@ -16,6 +16,7 @@ class AnswerViewController: UIViewController {
   var questionsLeft: [Question] = []
   var numTotal = 0;
   var numCorrect = 0;
+  var urlString = ""
   
   @IBOutlet weak var questionLabel: UILabel!
   @IBOutlet weak var answerLabel: UILabel!
@@ -48,10 +49,12 @@ class AnswerViewController: UIViewController {
       questionVC.questions = questionsLeft
       questionVC.numCorrect = numCorrect
       questionVC.numTotal = numTotal
+      questionVC.urlString = urlString
     } else if segue.identifier == "answerToFinish" {
       let finishVC = segue.destination as! FinishViewController
       finishVC.numCorrect = numCorrect
       finishVC.numTotal = numTotal
+      finishVC.urlString = urlString
     }
   }
 }

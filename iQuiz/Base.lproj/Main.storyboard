@@ -90,7 +90,7 @@
                                 <rect key="frame" x="171.5" y="537" width="32" height="30"/>
                                 <state key="normal" title="Next"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="8mY-F4-ys8"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="backToMain" id="8mY-F4-ys8"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="99Q-jZ-r4S">
@@ -306,7 +306,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="16n-Mp-RGx"/>
-        <segue reference="mCn-i9-n5g"/>
+        <segue reference="LcP-ns-D9i"/>
+        <segue reference="8mY-F4-ys8"/>
     </inferredMetricsTieBreakers>
 </document>

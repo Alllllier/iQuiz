@@ -15,17 +15,24 @@ class FinishViewController: UIViewController {
   
   var numCorrect = 0
   var numTotal = 0
+  var urlString = ""
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "backToMain" {
+      let mainVC = segue.destination as! ViewController
+      mainVC.urlString = urlString
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     score.text = String(numCorrect) + " / " + String(numTotal)
-    switch numCorrect {
-    case 2:
+    if numCorrect == numTotal {
       congra.text = "Perfect!"
-    case 1:
-      congra.text = "Almost!"
-    default:
+    } else if numCorrect == 0 {
       congra.text = "Emmm"
+    } else {
+      congra.text = "Almost!"
     }
   }
 }
